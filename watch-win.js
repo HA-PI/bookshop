@@ -16,7 +16,7 @@ fs.watch(src_path, {recursive: true}, function (eventType, filename) {
 
 fs.watch(web_path, {recursive: true}, function (eventType, filename) {
     console.log(eventType, '->', filename);
-    if (filename.endsWith('.jsp') || filename.endsWith('.html')
+    if (filename.endsWith('.jsp') || filename.endsWith('.html') || filename.endsWith('.jar')
         || filename.endsWith('.css') || filename.endsWith('.xml') || filename.endsWith('.js')) {
         console.log(cp.execSync("sh deploy.sh").toString());
     }
