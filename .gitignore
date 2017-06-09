@@ -10,3 +10,4 @@ tomcat_home
 WebContent/
 .settings/
 .classpath
+.project
