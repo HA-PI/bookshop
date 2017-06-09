@@ -11,3 +11,4 @@ WebContent/
 .settings/
 .classpath
 .project
+build/
