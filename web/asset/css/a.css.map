@@ -1,0 +1,1 @@
+{"version":3,"sources":["a.less","a.css"],"names":[],"mappings":"AAAA;EAEI,YAAA;EACA,6BAAA;EAAA,qBAAA;CCAH","file":"a.css","sourcesContent":["body {\n  a {\n    color: aqua;\n    transition: color 2s;\n  }\n}","body a {\n  color: aqua;\n  transition: color 2s;\n}\n"]}
