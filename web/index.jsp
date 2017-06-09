@@ -14,6 +14,8 @@
   </head>
   <body>
   <h1>88 <%=a.a%></h1>
+  <h1><%=a.n()%></h1>
+  <h1>JSON = <%=a.json().toString()%> ssx</h1>
   ssssss$END$sss
   </body>
 </html>
