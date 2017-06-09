@@ -14,6 +14,8 @@ command_exists () {
 
 if ! command_exists open; then
     rm -rf "$tomcat_home"webapps/"$proj_name"
+else
+    rm -rf "$tomcat_home"webapps/"$proj_name"
 fi
 
 echo cp -rf release/"$proj_name"/ \""$tomcat_home"webapps/"$proj_name"\"
