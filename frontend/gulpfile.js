@@ -30,7 +30,7 @@ console.log('__DEV__=', __DEV__);
 var outdir = "../web/asset/",
     indir = "src/";
 
-const COMMON_VENDER = ['jquery', 'bootstrap'];
+const COMMON_VENDER = ['jquery', 'bootstrap', 'babel-polyfill'];
 const OUTS = ['jquery'];
 
 function compileCMD(file, watched) {
@@ -106,7 +106,10 @@ gulp.task('compile-coffee', function () {
         .pipe(gulp.dest(path.join(indir, "js")))
 });
 
-gulp.task('default', ['compile-less', 'copy-static', 'bower2static']);
+gulp.task('default', function () {
+    __DEV__ = false;
+    gulp.start(['compile-less', 'compile-coffee', 'compile-js', 'bundle', 'copy-static', 'bower2static']);
+});
 
 gulp.task('watch-compile-less', function () {
     gulp.watch(path.join(indir, 'less/**/*.less'), ['compile-less']);
