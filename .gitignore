@@ -3,3 +3,6 @@ node_modules/
 out/
 release/
 *.iml
+
+sources.txt
+tomcat_home
