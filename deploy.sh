@@ -6,7 +6,8 @@ cd $DIR
 tomcat_home=$(cat tomcat_home)
 proj_name=$(cat project_name)
 
-./compile.sh $@
+sh compile.sh $@
 
-echo cp -rf release/"$proj_name"/ $tomcat_home"webapps/""$proj_name"
-cp -rf release/"$proj_name"/ $tomcat_home"webapps/""$proj_name"
+rm -rf "$tomcat_home"webapps/"$proj_name"
+echo cp -rf release/"$proj_name"/ \""$tomcat_home"webapps/"$proj_name"\"
+cp -rf release/"$proj_name"/ "$tomcat_home"webapps/"$proj_name"

@@ -10,7 +10,7 @@ const web_path = path.join(__dirname, 'web');
 fs.watch(src_path, {recursive: true}, function (eventType, filename) {
     console.log(eventType, '->', filename);
     if (filename.endsWith('.java')) {
-        console.log(cp.execSync("sh deploy.sh java src/"+filename).toString());
+        console.log(cp.execSync("sh deploy.sh").toString());
     }
 });
 
@@ -18,6 +18,6 @@ fs.watch(web_path, {recursive: true}, function (eventType, filename) {
     console.log(eventType, '->', filename);
     if (filename.endsWith('.jsp') || filename.endsWith('.html')
         || filename.endsWith('.css') || filename.endsWith('.xml') || filename.endsWith('.js')) {
-        console.log(cp.execSync("sh deploy.sh web web/"+filename).toString());
+        console.log(cp.execSync("sh deploy.sh").toString());
     }
 });
