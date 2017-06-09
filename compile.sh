@@ -33,10 +33,10 @@ if [ "$compile_java" == "1" ]; then
         echo compile_java ALL
         find src -name "*.java" > sources.txt
         javac -cp $tomcat_home"lib/servlet-api.jar" -cp $tomcat_home"lib/jsp-api.jar" -d release/"$proj_name"/WEB-INF/classes \
-        @sources.txt
+        -encoding utf-8 @sources.txt
     else
         echo compile_java ${files[@]:1}
         javac -cp $tomcat_home"lib/servlet-api.jar" -cp $tomcat_home"lib/jsp-api.jar" -d release/"$proj_name"/WEB-INF/classes \
-        ${files[@]:1}
+        -encoding utf-8 ${files[@]:1}
     fi
 fi
