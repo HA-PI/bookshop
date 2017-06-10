@@ -1,4 +1,6 @@
-jq = require 'jquery'
+import jq from 'jquery'
+
+`import {alert, confirm} from 'dialog'`
 
 song = ["do", "re", "mi", "fa", "so"]
 
@@ -18,4 +20,23 @@ kids =
     name: "Ida"
     age: 9
 
-console.log jq, song, singers, bitlist, kids
+console.log jq, alert, confirm, song, singers, bitlist, kids
+
+class Person
+  constructor: (@firstName, @lastName) ->
+
+  name: ->
+    "#{@first_name} #{@last_name}"
+
+  setName: (name) ->
+    names = name.split " "
+
+    @firstName = names[0]
+    @lastName = names[1]
+
+blake = new Person "Blake", "Williams"
+blake.setName("Blake Anderson")
+console.log blake.name()
+
+$("button").on "click", ->
+  alert $(@).id()

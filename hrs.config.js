@@ -10,7 +10,9 @@ module.exports = {
             redirect: true, // default: true
             target: "http://localhost:8080/bookshop",//"http://localhost:6999",
             changeHost: true,  // default: true
-
+            headers: {
+                'cookie': 'JSESSIONID=C159C79AC054C005A7C1107FBFB3CF61'
+            },
             hot: false, // hot reload enable? default: false
             // Function/RegExp: will be set root config hotRule if it is null
             hotRule: function (filename, request) {
