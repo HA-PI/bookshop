@@ -17,7 +17,7 @@ public class Name {
 
     @Override
     public String toString() {
-        return "Name::{" +
+        return "Name->>{" +
                 "fullname='" + fullname + '\'' +
                 ", dickname='" + dickname + '\'' +
                 '}';

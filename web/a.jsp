@@ -15,7 +15,7 @@
   <body>
   <%
     JSONObject obj = new JSONObject();
-    obj.put("k", new Name("axxxxxsswww", "b"));
+    obj.put("k", new Name("cmmmmwwww", "b"));
   %>
   <h2><%=new Name("0ssssss8s8pp", "b")%></h2>
   <h1><%=obj%></h1>

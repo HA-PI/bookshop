@@ -15,6 +15,7 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
     coffee = require('gulp-coffee'),
+    rename = require('gulp-rename'),
     less = require('gulp-less');
 
 var watchify = require('watchify');
@@ -155,6 +156,9 @@ gulp.task('compile-less', function compileLess() {
         }))
         .pipe(autoprefixer({
             browsers: ['last 2 versions'],
+        }))
+        .pipe(rename((path) => {
+            path.basename += '.min'
         }))
         .pipe(sourcemap.write('./'))
         .pipe(gulp.dest(path.join(outdir, "css")))
