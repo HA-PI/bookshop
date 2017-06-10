@@ -1,5 +1,5 @@
 (function() {
-  var $, Person, alert, bitlist, blake, confirm, kids, ref, singers, song;
+  var $, Person, alert, bitlist, blake, confirm, kids, ref, singers, song, text, time, time_gen;
 
   $ = require('jquery');
 
@@ -10,6 +10,20 @@
   singers = {
     Jagger: "Rock",
     Elvis: "Roll"
+  };
+
+  text = "Every literary critic believes he will outwit history and have the last word";
+
+  text = "Every literary critic believes he will\n  outwit history and have the last word";
+
+  time_gen = (function(_this) {
+    return function() {
+      return "The time is " + (new Date().toLocaleTimeString());
+    };
+  })(this);
+
+  time = function() {
+    return "The time is " + (new Date().toLocaleTimeString());
   };
 
   bitlist = [1, 0, 1, 0, 0, 1, 1, 1, 1];

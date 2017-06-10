@@ -5,6 +5,21 @@ song = ["do", "re", "mi", "fa", "so"]
 
 singers = {Jagger: "Rock", Elvis: "Roll"}
 
+text = "Every literary critic believes he will
+        outwit history and have the last word"
+
+text = """
+       Every literary critic believes he will
+         outwit history and have the last word
+       """
+time_gen = =>
+  "The time is #{new Date().toLocaleTimeString()}"
+
+time = ->
+    "The time is #{new Date().toLocaleTimeString()}"
+
+
+
 bitlist = [
   1, 0, 1
   0, 0, 1
