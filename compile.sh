@@ -32,12 +32,25 @@ if [ $? != 0 ]; then
     cp -rf web/* release/"$proj_name"/
 fi
 
+command_exists () {
+    type "$1" &> /dev/null ;
+}
+
 compile_all() {
     echo compile_java ALL
     find src -name "*.java" > sources.txt
-    javac -cp "$tomcat_home""lib/*:""release/""$proj_name""/WEB-INF/classes/:""web/WEB-INF/lib/*" \
-    -d release/"$proj_name"/WEB-INF/classes \
-    -encoding utf-8 @sources.txt
+
+    if ! command_exists open; then
+      javac -cp "$tomcat_home""lib/*;""release/""$proj_name""/WEB-INF/classes/;""web/WEB-INF/lib/*" \
+        -d release/"$proj_name"/WEB-INF/classes \
+        -encoding utf-8 @sources.txt
+    else
+      javac -cp "$tomcat_home""lib/*:""release/""$proj_name""/WEB-INF/classes/:""web/WEB-INF/lib/*" \
+        -d release/"$proj_name"/WEB-INF/classes \
+        -encoding utf-8 @sources.txt
+    fi
+
+
 
 }
 files=($@)
@@ -47,9 +60,16 @@ if [ "$compile_java" == "1" ]; then
         compile_all
     else
         echo compile_java ${files[@]:1}
-        javac -cp "$tomcat_home""lib/*:""release/""$proj_name""/WEB-INF/classes/:""web/WEB-INF/lib/*" \
-        -d release/"$proj_name"/WEB-INF/classes \
-        -encoding utf-8 ${files[@]:1}
+        if ! command_exists open; then
+            javac -cp "$tomcat_home""lib/*;""release/""$proj_name""/WEB-INF/classes/;""web/WEB-INF/lib/*" \
+            -d release/"$proj_name"/WEB-INF/classes \
+            -encoding utf-8 ${files[@]:1}
+        else
+            javac -cp "$tomcat_home""lib/*:""release/""$proj_name""/WEB-INF/classes/:""web/WEB-INF/lib/*" \
+            -d release/"$proj_name"/WEB-INF/classes \
+            -encoding utf-8 ${files[@]:1}
+        fi
+
 
         if [ $? != 0 ]; then
             compile_all
@@ -57,4 +77,4 @@ if [ "$compile_java" == "1" ]; then
     fi
 fi
 
-javac -cp "/Users/moyu/tomcat 7.0/lib/servlet-api.jar" -cp "/Users/moyu/tomcat 7.0/lib/jsp-api.jar" -cp "web/WEB-INF/lib/*" -d release/bookshop/WEB-INF/classes @sources.txt
+# javac -cp "/Users/moyu/tomcat 7.0/lib/servlet-api.jar" -cp "/Users/moyu/tomcat 7.0/lib/jsp-api.jar" -cp "web/WEB-INF/lib/*" -d release/bookshop/WEB-INF/classes @sources.txt
