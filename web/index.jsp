@@ -1,4 +1,5 @@
-<%@ page import="a.b.A" %><%--
+<%@ page import="a.b.A" %>
+<%@ page import="net.sf.json.JSONObject" %><%--
   Created by IntelliJ IDEA.
   User: moyu
   Date: 2017/6/8
@@ -15,7 +16,7 @@
   <body>
   <h1>88 <%=a.a%></h1>
   <h1><%=a.n()%></h1>
-  <h1>JSONO= <%=a.json().toString()%> ssx</h1>
+  <h1>JSONO= <%=a.json()%> ssssx</h1>
   ssssss$END$sss
   </body>
 </html>

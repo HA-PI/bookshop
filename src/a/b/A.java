@@ -1,7 +1,8 @@
 package a.b;
 
-import org.json.simple.JSONObject;
+import net.sf.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.sql.*;
 
 /**
@@ -69,29 +70,35 @@ public class A {
 
     }
 
-    public static void main(String[] args) throws SQLException {
-        Connection conn = getConnInstance();
-        ps = conn.prepareStatement("SELECT * FROM `face_import`");
-        rs = ps.executeQuery();
-        while (rs.next()) {
-            System.out.println("size: " + rs.getFetchSize());
-        }
-    }
 
-    public static int n() throws SQLException {
+    public static String n() throws SQLException {
         Connection conn = getConnInstance();
         ps = conn.prepareStatement("SELECT * FROM `face_import`");
         rs = ps.executeQuery();
         if (rs.next()) {
-            return rs.getFetchSize();
+            return rs.getString(1);
         }
-        return 0;
+        return "wu";
     }
 
+    /*public static Object toBean(JSONObject jobject, Object object) {
+        for (Field field : object.getClass().getDeclaredFields()) {
+            try {
+                field.set(object, jobject.getString(field.getName()));
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+    }*/
+
+
     public static JSONObject json() {
+
         JSONObject obj = new JSONObject();
-        Name name = new Name("fullname", "dickname");
+        Name name = new Name("full---name", "dickname");
+        // sssss
         obj.put("key", name);
+        obj.put("key2", JSONObject.fromObject(name));
         return obj;
     }
 }

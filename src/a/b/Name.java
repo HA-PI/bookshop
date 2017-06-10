@@ -1,6 +1,6 @@
 package a.b;
 
-import org.json.simple.JSONObject;
+//import org.json.simple.JSONObject;
 
 import java.sql.*;
 
@@ -8,6 +8,7 @@ import java.sql.*;
  * Created by moyu on 2017/6/8.
  */
 public class Name {
+
     public String fullname;
     public String dickname;
 
