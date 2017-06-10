@@ -41,7 +41,7 @@ function compileCMD(file, watched) {
         debug: __DEV__
     };
     var opts = Object.assign({}, watchify.args, customOpts);
-    var b = browserify(file, opts).transform(babelify);
+    var b = browserify(file, opts).transform(babelify, {presets: ["es2015", "stage-0"]});
     b = COMMON_VENDER.reduce((obj, file) => {
         if (typeof file === 'string') {
             return obj.exclude(file);

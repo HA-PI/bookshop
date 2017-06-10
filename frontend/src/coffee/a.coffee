@@ -1,6 +1,5 @@
-import jq from 'jquery'
-
-`import {alert, confirm} from 'dialog'`
+$ = require 'jquery'
+{alert, confirm} = require 'dialog'
 
 song = ["do", "re", "mi", "fa", "so"]
 
@@ -20,7 +19,7 @@ kids =
     name: "Ida"
     age: 9
 
-console.log jq, alert, confirm, song, singers, bitlist, kids
+console.log alert, confirm, song, singers, bitlist, kids
 
 class Person
   constructor: (@firstName, @lastName) ->
@@ -38,5 +37,6 @@ blake = new Person "Blake", "Williams"
 blake.setName("Blake Anderson")
 console.log blake.name()
 
-$("button").on "click", ->
-  alert $(@).id()
+alert "content", "title"
+
+

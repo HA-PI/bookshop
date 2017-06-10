@@ -15,5 +15,6 @@
 
 
   <jsp:include page="WEB-INF/template/footer.jsp"/>
+  <script src="asset/js/a.min.js"></script>
 </body>
 </html>
