@@ -48,6 +48,7 @@ sourcemap.write = function (dir, opts) {
     return dir ? __write(dir, opts) : __write(opts)
 }
 
+let local_env = !!gulp.env.local;
 let babel_enable = gulp.env.babel;
 let requires = toArr(gulp.env.r || gulp.env.require), bundle_file = 'bundle.min.js';
 let COMMON_VENDER = browser_conf.vender;
@@ -102,7 +103,7 @@ function compileCMD(file, watched) {
         .pipe(gulp.dest(path.join(outdir, '/js')));
 }
 
-gulp.task('browser-sync', function() {
+gulp.task('browser-sync', ['proxy-hrs'], function() {
     browserSync.init({
         proxy: {
             target: "http://localhost:8080",
@@ -116,11 +117,20 @@ gulp.task('browser-sync', function() {
     });
 });
 
-gulp.task('watch-jsp', function() {
-    let tomcat_home = fs.readFileSync('../../tomcat_home').toString();
-    let proj_name = fs.readFileSync('../../project_name').toString();
-    let base = tomcat_home+'/webapps/'+proj_name;
+gulp.task('browser-sync-remote', function() {
+    browserSync.init({
+        proxy: {
+            target: "http://blog.moyuyc.xyz:8080",
+        },
+        ui: {
+            weinre: {
+                port: 9090
+            }
+        }
+    });
+});
 
+function browserHotReload(base, delay) {
     let reloading = false, time;
     return gulp.watch([
         base+'/**/*.jsp', base+'/**/*.js', base+'/**/*.css', base+'/**/*.html',
@@ -131,13 +141,25 @@ gulp.task('watch-jsp', function() {
             if (time!=null) clearTimeout(time);
             time = setTimeout(function () {
                 browserSync.reload();
-            }, 1000);
+            }, delay || 1000);
             reloading = true;
             setImmediate(function () {
                 reloading = false;
             })
         }
     })
+}
+
+gulp.task('watch-server', ['browser-sync'], function () {
+    let tomcat_home = fs.readFileSync('../../tomcat_home').toString();
+    let proj_name = fs.readFileSync('../../project_name').toString();
+    let base = tomcat_home+'/webapps/'+proj_name;
+    return browserHotReload(base);
+});
+
+gulp.task('watch-remote', ['browser-sync-remote'], function () {
+    let base = path.join(outdir, '..');
+    return browserHotReload(base, 200);
 });
 
 gulp.task('bundle', function () {
@@ -233,7 +255,7 @@ gulp.task('watch', function () {
         console.log('COMMON_VENDER', COMMON_VENDER);
         console.log('EXCLUDES', EXCLUDES);
     });
-    gulp.start('watch-compile-less', 'watch-compile-coffee', 'compile-js', 'watch-compile-bootstrap-less', 'watch-jsp', 'proxy-hrs', 'browser-sync');
+    gulp.start('watch-compile-less', 'watch-compile-coffee', 'compile-js', 'watch-compile-bootstrap-less', local_env ? 'watch-server' : 'watch-remote');
 });
 
 
