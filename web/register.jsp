@@ -2,13 +2,14 @@
 <html>
 <head>
   <%@include file="WEB-INF/template/head.jsp" %>
-  <title> 登录 </title>
+  <title> 注册 </title>
 </head>
 <body>
 <jsp:include page="WEB-INF/template/navbar.jsp">
   <jsp:param name="active" value="register"/>
 </jsp:include>
 
+<main class="container">
 <main class="row">
   <div class="center-block col-sm-6 no-float ">
     <div class="panel panel-success">
@@ -46,6 +47,7 @@
       </div>
     </div>
   </div>
+</main>
 </main>
 
 <%@include file="WEB-INF/template/footer.jsp" %>

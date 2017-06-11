@@ -18,6 +18,7 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     less = require('gulp-less');
 
+var browserSync = require('browser-sync').create();
 var watchify = require('watchify');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
@@ -80,6 +81,7 @@ function compileCMD(file, watched) {
         b = watchify(b);
         b.on('update', function () {
             console.log('-> compiling CMD Module -> ' + file);
+            // browserSync.reload();
             compileCMD(file);
         });
     }
@@ -99,6 +101,32 @@ function compileCMD(file, watched) {
         .pipe(!__DEV__ ? noop() : sourcemap.write('./'))
         .pipe(gulp.dest(path.join(outdir, '/js')));
 }
+
+gulp.task('browser-sync', function() {
+    browserSync.init({
+        proxy: "http://localhost:8082"
+    });
+});
+
+gulp.task('watch-jsp', function() {
+    let tomcat_home = fs.readFileSync('../../tomcat_home').toString();
+    let proj_name = fs.readFileSync('../../project_name').toString();
+    let base = tomcat_home+'/webapps/'+proj_name;
+
+    let reloading = false;
+    return gulp.watch([
+        base+'/**/*.jsp', base+'/**/*.js', base+'/**/*.css', base+'/**/*.html',
+        base+'/**/*.jar', base+'/**/*.html', base+'/**/*.class'
+    ]).on('change', function () {
+        if (!reloading) {
+            browserSync.reload();
+            reloading = true;
+            setImmediate(function () {
+                reloading = false;
+            })
+        }
+    })
+});
 
 gulp.task('bundle', function () {
     let bundle = (requires || COMMON_VENDER).reduce((bowser, a) => {
@@ -156,6 +184,15 @@ gulp.task('compile-coffee', function () {
         .pipe(gulp.dest(path.join(indir, "js")))
 });
 
+gulp.task('proxy-hrs', function (cb) {
+    require('child_process').exec("hrs", {
+        cwd: path.join(__dirname, '../..')
+    }, function (err, stdout, stderr) {
+        if (err) cb(err);
+        else cb();
+    })
+});
+
 gulp.task('default', function () {
     __DEV__ = false;
     return gulp.start(['compile-less', 'compile-coffee', 'bundle', 'copy-static', 'bower2static', 'compile-bootstrap-less', 'compile-js']);
@@ -165,7 +202,7 @@ gulp.task('watch-compile-less', function () {
     gulp.watch(path.join(indir, 'less/**/*.less'), ['compile-less']);
 });
 gulp.task('watch-compile-coffee', function () {
-    gulp.watch(path.join(indir, '/coffee/**/*.coffee'), ['compile-coffee']);
+    gulp.watch(path.join(indir, '/coffee/**/*.coffee'), ['compile-coffee'])
 });
 
 // gulp.task('watch-compile-js', function () {
@@ -182,7 +219,7 @@ gulp.task('watch', function () {
         console.log('COMMON_VENDER', COMMON_VENDER);
         console.log('EXCLUDES', EXCLUDES);
     });
-    gulp.start('watch-compile-less', 'watch-compile-coffee', 'compile-js', 'watch-compile-bootstrap-less');
+    gulp.start('watch-compile-less', 'watch-compile-coffee', 'compile-js', 'watch-compile-bootstrap-less', 'watch-jsp', 'proxy-hrs', 'browser-sync');
 });
 
 

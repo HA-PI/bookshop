@@ -9,7 +9,8 @@
   <jsp:param name="active" value="login"/>
 </jsp:include>
 
-<main class="row">
+<main class="container">
+  <main class="row">
   <div class="center-block col-lg-4 col-md-5 no-float ">
     <div class="panel panel-success">
       <div class="panel-body">
@@ -38,6 +39,7 @@
       </div>
     </div>
   </div>
+</main>
 </main>
 
 
