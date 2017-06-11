@@ -7,8 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "bundle": "browserify -r jquery -r bootstrap",
-    "hotdev": "hrs",
-    "postinstall": "ln -sf \"$(pwd)/node_modules/bootstrap\" src/node_modules/bootstrap"
+    "hotdev": "hrs"
   },
   "bowser": {
     "jquery": "jq"
@@ -17,12 +16,14 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "babel-plugin-es6-promise": "^1.1.1",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babelify": "^7.3.0",
     "browserify": "^14.4.0",
+    "es6-promise": "^4.1.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-babel": "^6.1.2",
@@ -36,6 +37,7 @@
     "gulp-sourcemaps": "^2.6.0",
     "gulp-uglify": "^3.0.0",
     "jquery": "^3.2.1",
+    "jquery-form": "^4.2.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.9.0"

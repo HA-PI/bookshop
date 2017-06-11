@@ -24,25 +24,53 @@ var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var babelify = require('babelify');
 
+var browser_conf = require('./browser.conf');
 
 __DEV__ = (!gulp.env.prod);
 console.log('__DEV__=', __DEV__);
 
-var outdir = "../../web/asset/",
-    indir = ".";
+const toArr = function (o) {
+    if (!o) return o;
+    if (Array.isArray(o)) {
+        return o;
+    } else {
+        return [o];
+    }
+};
 
-const COMMON_VENDER = ['jquery', 'bootstrap', 'babel-polyfill', 'dialog'];
+var outdir = path.join(__dirname, "../../web/asset/"),
+    indir = path.join(__dirname, ".");
+
+var __write = sourcemap.write
+sourcemap.write = function (dir, opts) {
+    opts = Object.assign({includeContent: true}, opts)
+    return dir ? __write(dir, opts) : __write(opts)
+}
+
+let babel_enable = gulp.env.babel;
+let requires = toArr(gulp.env.r || gulp.env.require), bundle_file = 'bundle.min.js';
+let COMMON_VENDER = browser_conf.vender;
+let EXCLUDES = browser_conf.excludes;
+
+if (requires) {
+    let basename = path.basename;
+    bundle_file = gulp.env.o || gulp.env.out || ( basename(requires[0])+'.min.js' );
+}
+
+console.log('babel_enable', babel_enable);
+console.log('requires', requires);
+console.log('COMMON_VENDER', COMMON_VENDER);
+console.log('EXCLUDES', EXCLUDES);
+console.log('bundle_file', bundle_file);
 
 function compileCMD(file, watched) {
     var customOpts = {
-        // entries: fs.readdirSync(indir+"js").map(x => path.join(indir, "js", x)),
-        // entries: ['src/js/bundle.js'],
         browserField: true,
         debug: __DEV__
     };
     var opts = Object.assign({}, watchify.args, customOpts);
-    var b = browserify(file, opts).transform(babelify, {presets: ["es2015", "stage-0"]});
-    b = COMMON_VENDER.reduce((obj, file) => {
+    var b = browserify(file, opts).transform(babelify);
+    b = EXCLUDES.reduce((obj, file) => {
         if (typeof file === 'string') {
             return obj.exclude(file);
         }
@@ -64,39 +92,51 @@ function compileCMD(file, watched) {
         .pipe(source(path.basename(file).replace(/\.[^\.]*$/, '') + '.min.js'))
         // 可选项，如果你不需要缓存文件内容，就删除
         .pipe(buffer())
-        .pipe(sourcemap.init({loadMaps: true}))
+        .pipe(!__DEV__ ? noop() : sourcemap.init({loadMaps: true}))
         .pipe(__DEV__ ? noop() : uglify({
             // mangle: {except: ['require' ,'exports' ,'module' ,'$']}
         }))
-        .pipe(sourcemap.write('./'))
+        .pipe(!__DEV__ ? noop() : sourcemap.write('./'))
         .pipe(gulp.dest(path.join(outdir, '/js')));
 }
 
 gulp.task('bundle', function () {
-    return COMMON_VENDER.reduce((bowser, a) => {
+    let bundle = (requires || COMMON_VENDER).reduce((bowser, a) => {
         if (typeof a === 'string') {
             return bowser.require(a);
         }
         return bowser.require(a.file, a);
-    }, browserify('index', {
+    }, browserify(!requires?'index':null, {
         debug: __DEV__,
         browserField: true,
-    }))
-        .transform(babelify)
-        // .require('./src/lib/dialog', {expose: 'my-dialog'})
-        .bundle()
+    }));
+
+    if (requires) {
+        bundle = COMMON_VENDER.reduce((obj, file) => {
+            if (typeof file === 'string') {
+                return obj.exclude(file);
+            }
+            return obj.exclude(file.file).exclude(file.expose);
+        }, bundle);
+    }
+
+    if (!requires || babel_enable) {
+        bundle = bundle.transform(babelify);
+    }
+
+    return bundle.bundle()
         .on('error', function (err) {
             console.error(err);
             this.emit('end');
         })
-        .pipe(source('bundle.min.js'))
+        .pipe(source(bundle_file))
         // 可选项，如果你不需要缓存文件内容，就删除
         .pipe(buffer())
-        .pipe(sourcemap.init({loadMaps: true}))
+        .pipe(!__DEV__ ? noop() : sourcemap.init({loadMaps: true}))
         .pipe(__DEV__ ? noop() : uglify({
             // mangle: {except: ['require' ,'exports' ,'module' ,'$']}
         }))
-        .pipe(sourcemap.write('./'))
+        .pipe(!__DEV__ ? noop() : sourcemap.write('./'))
         .pipe(gulp.dest(path.join(outdir, 'js')));
 })
 
@@ -109,10 +149,10 @@ gulp.task('compile-js', function () {
 gulp.task('compile-coffee', function () {
     return gulp
         .src(path.join(indir, '/coffee/**/*.coffee'))
-        .pipe(sourcemap.init({loadMaps: true}))
+        // .pipe(!__DEV__ ? noop() : sourcemap.init({loadMaps: true}))
         .pipe(coffee({}))
         // .pipe(__DEV__ ? noop() : uglify())
-        .pipe(sourcemap.write('./'))
+        // .pipe(!__DEV__ ? noop() : sourcemap.write('./'))
         .pipe(gulp.dest(path.join(indir, "js")))
 });
 
@@ -134,6 +174,14 @@ gulp.task('watch-compile-coffee', function () {
 
 gulp.task('watch', function () {
     __DEV__ = true;
+    gulp.watch('./browser.conf.js', function () {
+        delete require.cache[require.resolve('./browser.conf')];
+        browser_conf = require('./browser.conf');
+        COMMON_VENDER = browser_conf.vender;
+        EXCLUDES = browser_conf.excludes;
+        console.log('COMMON_VENDER', COMMON_VENDER);
+        console.log('EXCLUDES', EXCLUDES);
+    });
     gulp.start('watch-compile-less', 'watch-compile-coffee', 'compile-js', 'watch-compile-bootstrap-less');
 });
 
@@ -164,7 +212,7 @@ gulp.task('watch-compile-bootstrap-less', function () {
 gulp.task('compile-less', function compileLess() {
     return gulp
         .src(path.join(indir, '/less/**/*.less'))
-        .pipe(sourcemap.init({loadMaps: true}))
+        .pipe(!__DEV__ ? noop() : sourcemap.init({loadMaps: true}))
         .pipe(less({
             compress: !__DEV__
         }))
@@ -174,14 +222,14 @@ gulp.task('compile-less', function compileLess() {
         .pipe(rename((path) => {
             path.basename += '.min'
         }))
-        .pipe(sourcemap.write('./'))
+        .pipe(!__DEV__ ? noop() : sourcemap.write('./'))
         .pipe(gulp.dest(path.join(outdir, "css")))
 });
 
 gulp.task('compile-bootstrap-less', function compileLess() {
     return gulp
         .src(path.join(__dirname, '/node_modules/bootstrap/less/bootstrap.less'))
-        .pipe(sourcemap.init({loadMaps: true}))
+        .pipe(!__DEV__ ? noop() : sourcemap.init({loadMaps: true}))
         .pipe(less({
             compress: !__DEV__
         }))
@@ -191,18 +239,10 @@ gulp.task('compile-bootstrap-less', function compileLess() {
         .pipe(rename((path) => {
             path.basename += '.min'
         }))
-        .pipe(sourcemap.write('./'))
+        .pipe(!__DEV__ ? noop() : sourcemap.write('./'))
         .pipe(gulp.dest(path.join(outdir, "css")))
 });
 
-// gulp.task('compile-js', function compileJs() {
-//     return gulp
-//         .src(path.join(indir, '/js/**/*.js'))
-//         .pipe(sourcemap.init({loadMaps: true}))
-//         .pipe(babel())
-//         .pipe(sourcemap.write('./'))
-//         .pipe(gulp.dest(path.join(outdir, "js")))
-// });
 
 gulp.task('copy-static', function () {
     return gulp

@@ -13,4 +13,7 @@
     <link rel="stylesheet" href="/asset/css/bootstrap.min.css">
     <link rel="stylesheet" href="/asset/static/font-awesome.min.css">
     <link rel="stylesheet" href="/asset/css/base.min.css">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/asset/static/html5shiv.min.js"></script>
+    <![endif]-->
     <script src="/asset/js/bundle.min.js"></script>

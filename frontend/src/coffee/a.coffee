@@ -1,5 +1,9 @@
 $ = require 'jquery'
 {alert, confirm} = require 'dialog'
+#$form = require 'jquery-form';
+
+#global.alert "232";
+#global.alert "232222";
 
 song = ["do", "re", "mi", "fa", "so"]
 
@@ -18,7 +22,8 @@ time_gen = =>
 time = ->
     "The time is #{new Date().toLocaleTimeString()}"
 
-
+new Promise (resolve, reject) ->
+  resolve(120);
 
 bitlist = [
   1, 0, 1
@@ -34,7 +39,6 @@ kids =
     name: "Ida"
     age: 9
 
-console.log alert, confirm, song, singers, bitlist, kids
 
 class Person
   constructor: (@firstName, @lastName) ->
@@ -52,6 +56,6 @@ blake = new Person "Blake", "Williams"
 blake.setName("Blake Anderson")
 console.log blake.name()
 
-alert "content", "title"
+#alert "content", "title"
 
 

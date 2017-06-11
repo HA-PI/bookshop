@@ -26,6 +26,10 @@
     return "The time is " + (new Date().toLocaleTimeString());
   };
 
+  new Promise(function(resolve, reject) {
+    return resolve(120);
+  });
+
   bitlist = [1, 0, 1, 0, 0, 1, 1, 1, 1];
 
   kids = {
@@ -38,8 +42,6 @@
       age: 9
     }
   };
-
-  console.log(alert, confirm, song, singers, bitlist, kids);
 
   Person = (function() {
     function Person(firstName, lastName) {
@@ -68,8 +70,4 @@
 
   console.log(blake.name());
 
-  alert("content", "title");
-
 }).call(this);
-
-//# sourceMappingURL=a.js.map
