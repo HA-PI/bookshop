@@ -12,9 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-/**
- * Created by Yc on 2016/4/8 for students_system.
- */
 @WebServlet(name = "indexServlet", urlPatterns = {"", "/index"})
 public class IndexServlet extends MapJspServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
