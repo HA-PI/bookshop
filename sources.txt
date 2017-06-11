@@ -1,2 +1,7 @@
 src/a/b/A.java
 src/a/b/Name.java
+src/xyz/bookshop/filter/JspUrlFilter.java
+src/xyz/bookshop/filter/LoggedFilter.java
+src/xyz/bookshop/servlet/IndexServlet.java
+src/xyz/bookshop/servlet/MapJspServlet.java
+src/xyz/bookshop/servlet/RegisterServlet.java

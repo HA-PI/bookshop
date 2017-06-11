@@ -9,7 +9,7 @@ import java.sql.*;
  * Created by moyu on 2017/6/8.
  */
 public class A {
-    public String a = "hs哈";
+    public String a = "sss pp学习是啥pll";
 
 
     private static final String DRIVER = "com.mysql.jdbc.Driver";

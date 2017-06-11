@@ -19,8 +19,9 @@
 
           <div class="form-group">
             <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user"></i> <span
-                                    class="hidden-xs">用户帐号</span></span>
+                            <span class="input-group-addon"><i class="fa fa-user"></i>
+                              <span class="hidden-xs">用户帐号</span>
+                            </span>
               <input type="text" class="form-control" placeholder="用户名" id="user"/>
             </div>
           </div>

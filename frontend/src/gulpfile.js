@@ -104,7 +104,15 @@ function compileCMD(file, watched) {
 
 gulp.task('browser-sync', function() {
     browserSync.init({
-        proxy: "http://localhost:8082"
+        proxy: {
+            target: "http://localhost:8080",
+            ws: false
+        },
+        ui: {
+            weinre: {
+                port: 9090
+            }
+        }
     });
 });
 
@@ -113,13 +121,17 @@ gulp.task('watch-jsp', function() {
     let proj_name = fs.readFileSync('../../project_name').toString();
     let base = tomcat_home+'/webapps/'+proj_name;
 
-    let reloading = false;
+    let reloading = false, time;
     return gulp.watch([
         base+'/**/*.jsp', base+'/**/*.js', base+'/**/*.css', base+'/**/*.html',
         base+'/**/*.jar', base+'/**/*.html', base+'/**/*.class'
-    ]).on('change', function () {
+    ]).on('change', function (file) {
         if (!reloading) {
-            browserSync.reload();
+            console.log('[CHANGED]', file);
+            if (time!=null) clearTimeout(time);
+            time = setTimeout(function () {
+                browserSync.reload();
+            }, 1000);
             reloading = true;
             setImmediate(function () {
                 reloading = false;
@@ -185,11 +197,13 @@ gulp.task('compile-coffee', function () {
 });
 
 gulp.task('proxy-hrs', function (cb) {
-    require('child_process').exec("hrs", {
-        cwd: path.join(__dirname, '../..')
-    }, function (err, stdout, stderr) {
-        if (err) cb(err);
-        else cb();
+    require('child_process').spawn("hrs", {
+        cwd: path.join(__dirname, '../..'),
+        stdio: [ 'ignore', 1, 2 ]
+    }).on('exit', function (code, signal) {
+        cb();
+    }).on('error', function (err) {
+        cb(err);
     })
 });
 
