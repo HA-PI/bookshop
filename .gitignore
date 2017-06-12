@@ -13,3 +13,4 @@ WebContent/
 .project
 build/
 project_name
+**/context.xml

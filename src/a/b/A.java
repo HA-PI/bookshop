@@ -11,9 +11,11 @@ import java.sql.*;
 public class A {
     public String a = "sss pp学习是啥pll";
 
+    static {
 
+    }
     private static final String DRIVER = "com.mysql.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3306/gp";
+    private static final String URL = "jdbc:mysql://blog.moyuyc.xyz:3306/shopping";
     private static final String USER = "root";
     private static final String PWD = "110114";
     protected static Connection conn;
@@ -73,7 +75,7 @@ public class A {
 
     public static String n() throws SQLException {
         Connection conn = getConnInstance();
-        ps = conn.prepareStatement("SELECT * FROM `face_import`");
+        ps = conn.prepareStatement("SELECT * FROM `books`");
         rs = ps.executeQuery();
         if (rs.next()) {
             return rs.getString(1);
@@ -90,7 +92,10 @@ public class A {
             }
         }
     }*/
-
+    public static void main(String[] args) throws SQLException {
+        System.out.println(A.n());
+        System.out.println("sss");
+    }
 
     public static JSONObject json() {
 
