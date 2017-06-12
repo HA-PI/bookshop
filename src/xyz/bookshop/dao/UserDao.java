@@ -34,4 +34,7 @@ public class UserDao extends BaseDao {
         return this.modify("insert into users values(?,?,current_date())", user.getUsername(), user.getPassword());
     }
 
+    public static void main(String[] args) throws SQLException {
+
+    }
 }

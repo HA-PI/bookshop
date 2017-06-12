@@ -11,10 +11,10 @@ import java.util.ResourceBundle;
  * Created by moyu on 2017/6/12.
  */
 public abstract class BaseDao {
-    private static String url;
+    /*private static String url;
     private static String username;
     private static String password;
-    private static String driver;
+    private static String driver;*/
 
     static DataSource ds;
 
@@ -78,8 +78,6 @@ public abstract class BaseDao {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
-        } finally {
-            close();
         }
     }
 
@@ -94,8 +92,6 @@ public abstract class BaseDao {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
-        } finally {
-            close();
         }
     }
 
