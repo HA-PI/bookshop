@@ -1,7 +1,5 @@
 package xyz.bookshop.servlet;
 
-import a.b.Name;
-
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
