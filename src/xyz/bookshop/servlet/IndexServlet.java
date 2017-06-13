@@ -1,6 +1,5 @@
 package xyz.bookshop.servlet;
 
-import a.b.Name;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -25,7 +24,7 @@ public class IndexServlet extends MapJspServlet {
     @Override
     protected void initRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         Object user = session.getAttribute("user");
-        request.setAttribute("data", new Object[]{"ele0", 1, -2});
+        request.setAttribute("data", new Object[]{"ele0", 1888, -2});
         request.setAttribute("user", user);
     }
 }
