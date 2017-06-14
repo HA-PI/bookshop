@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * Created by moyu on 2017/6/14.
  */
-@WebServlet(name = "AjaxServlet", urlPatterns = {"/api/register"})
+@WebServlet(name = "AjaxServlet", urlPatterns = {"/api/user/register"})
 public class RegisterAjaxServlet extends AjaxServlet {
 
     @Override
