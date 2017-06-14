@@ -8,10 +8,12 @@
   <jsp:include page="WEB-INF/template/navbar.jsp">
     <jsp:param name="active" value="index"/>
   </jsp:include>
-  <jsp:include page="WEB-INF/template/infor.jsp">
-    <jsp:param name="title" value="${initParam['title']}"/>
-    <jsp:param name="subTitle" value="欢迎来到${initParam['title']}！"/>
-  </jsp:include>
+  <main class="container">
+    <jsp:include page="WEB-INF/template/infor.jsp">
+      <jsp:param name="title" value="${initParam['title']}"/>
+      <jsp:param name="subTitle" value="欢迎来到${initParam['title']}！"/>
+    </jsp:include>
+  </main>
 
   <jsp:include page="WEB-INF/template/footer.jsp"/>
   <script src="asset/js/a.min.js"></script>

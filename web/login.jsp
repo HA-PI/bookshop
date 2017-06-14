@@ -10,6 +10,11 @@
 </jsp:include>
 
 <main class="container">
+  <jsp:include page="WEB-INF/template/infor.jsp">
+    <jsp:param name="title" value="登录吧，骚年"/>
+    <jsp:param name="subTitle" value="欢迎来到${initParam['title']}！"/>
+  </jsp:include>
+
   <main class="row">
   <div class="center-block col-lg-4 col-md-5 no-float ">
     <div class="panel panel-success">
