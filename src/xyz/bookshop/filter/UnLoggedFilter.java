@@ -11,7 +11,7 @@ import java.io.IOException;
  * Created by moyu on 2017/6/11.
  */
 @WebFilter(urlPatterns = {"/user"})
-public class LoggedFilter implements Filter {
+public class UnLoggedFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -20,8 +20,8 @@ public class LoggedFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletResponse response = (HttpServletResponse) servletRequest;
-        HttpServletRequest request = (HttpServletRequest) servletResponse;
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
 
         if (session.getAttribute("user") == null) {

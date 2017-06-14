@@ -45,7 +45,7 @@ public abstract class BaseDao {
 
     private Connection conn;
 
-    public Connection getConnection() throws SQLException {
+    protected Connection getConnection() throws SQLException {
         if (conn == null || conn.isClosed()) {
             conn = ds.getConnection();
             return conn;
@@ -67,7 +67,7 @@ public abstract class BaseDao {
         return null;
     }*/
 
-    public ResultSet select(String sql, Object... arguments) {
+    protected ResultSet select(String sql, Object... arguments) {
         try {
             conn = getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -81,7 +81,7 @@ public abstract class BaseDao {
         }
     }
 
-    public boolean modify(String sql, Object... args) {
+    protected boolean modify(String sql, Object... args) {
         PreparedStatement ps = null;
         try {
             ps = getConnection().prepareStatement(sql);
@@ -102,7 +102,7 @@ public abstract class BaseDao {
     }
 
 
-    public void close() {
+    protected void close() {
         try {
             if (conn != null && !conn.isClosed()) {
                 conn.close();

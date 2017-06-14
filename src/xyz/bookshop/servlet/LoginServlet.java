@@ -16,26 +16,8 @@ import java.io.IOException;
  */
 @WebServlet(urlPatterns = {"/login"})
 public class LoginServlet extends MapJspServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request,response);
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserDao userDao= new UserDao();
-        HttpSession session=request.getSession();
-        User l=(User) session.getAttribute("login");
-        if(l==null) l = userDao.checkLogin(request.getParameter("usename"), request.getParameter("password"));
-        if(l!=null){                                      //如果登陆成功
-            session.setAttribute("login",l);
-            response.sendRedirect("index.jsp");
-        }
-        else{
-
-        }
-    }
 
     @Override
-    protected void initRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-
+    protected void initRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
     }
 }

@@ -103,7 +103,7 @@ function compileCMD(file, watched) {
         .pipe(gulp.dest(path.join(outdir, '/js')));
 }
 
-gulp.task('browser-sync', ['proxy-hrs'], function() {
+gulp.task('browser-sync', [/*'proxy-hrs'*/], function() {
     browserSync.init({
         proxy: {
             target: "http://localhost:8080",
@@ -202,10 +202,23 @@ gulp.task('bundle', function () {
         .pipe(gulp.dest(path.join(outdir, 'js')));
 })
 
+var compileJsCache = {}
+
+gulp.task('watch-compile-js', function () {
+    gulp.watch(path.join(indir, 'js')+"/**/*.js", ['compile-js'])
+});
+
 gulp.task('compile-js', function () {
     let js_path = path.join(indir, 'js');
 
-    fs.readdirSync(js_path).filter(x => x.endsWith('.js')).map(x => path.join(js_path, x)).map(x => compileCMD(x));
+    fs.readdirSync(js_path).filter(x => x.endsWith('.js')).map(x => path.join(js_path, x)).filter((id) => {
+        if (compileJsCache[id]) {
+            return false;
+        } else {
+            compileJsCache[id] = true;
+            return true;
+        }
+    }).map(x => compileCMD(x));
 });
 
 gulp.task('compile-coffee', function () {
@@ -255,7 +268,7 @@ gulp.task('watch', function () {
         console.log('COMMON_VENDER', COMMON_VENDER);
         console.log('EXCLUDES', EXCLUDES);
     });
-    gulp.start('watch-compile-less', 'watch-compile-coffee', 'compile-js', 'watch-compile-bootstrap-less', local_env ? 'watch-server' : 'watch-remote');
+    gulp.start('watch-compile-less', 'watch-compile-coffee', 'compile-js', 'watch-compile-bootstrap-less', 'watch-compile-js', local_env ? 'watch-server' : 'watch-remote');
 });
 
 

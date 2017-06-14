@@ -1,61 +1,18 @@
 $ = require 'jquery'
 {alert, confirm} = require 'dialog'
-#$form = require 'jquery-form';
+jq_form = require 'jquery-form';
+form = jq_form(document)('#form')
 
-#global.alert "232";
-#global.alert "232222";
-
-song = ["do", "re", "mi", "fa", "so"]
-
-singers = {Jagger: "Rock", Elvis: "Roll"}
-
-text = "Every literary critic believes he will
-        outwit history and have the last word"
-
-text = """
-       Every literary critic believes he will
-         outwit history and have the last word
-       """
-time_gen = =>
-  "The time is #{new Date().toLocaleTimeString()}"
-
-time = ->
-    "The time is #{new Date().toLocaleTimeString()}"
-
-new Promise (resolve, reject) ->
-  resolve(120);
-
-bitlist = [
-  1, 0, 1
-  0, 0, 1
-  1, 1, 1
-]
-
-kids =
-  brother:
-    name: "Max"
-    age: 11
-  sister:
-    name: "Ida"
-    age: 9
-
-
-class Person
-  constructor: (@firstName, @lastName) ->
-
-  name: ->
-    "#{@first_name} #{@last_name}"
-
-  setName: (name) ->
-    names = name.split " "
-
-    @firstName = names[0]
-    @lastName = names[1]
-
-blake = new Person "Blake", "Williams"
-blake.setName("Blake Anderson")
-console.log blake.name()
-
-#alert "content", "title"
-
-
+form.ajaxForm(
+  beforeSubmit: (data, from, options) ->
+    if data.find((a)-> a.name is 'password').value isnt data.find((a) -> a.name is 'pwd-again').value
+      alert '两次密码不正确'
+      return false
+    form.find('[type=submit]').prop('disabled', true);
+  success: (json, statusText, xhr, $form) ->
+    form.find('[type=submit]').prop('disabled', false);
+    alert json.data
+  fail: (responseText, statusText, xhr, $form) ->
+    console.log responseText, statusText, xhr, $form
+  dataType: 'json'
+);

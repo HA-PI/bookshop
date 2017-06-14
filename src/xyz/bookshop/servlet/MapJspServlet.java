@@ -29,14 +29,13 @@ public abstract class MapJspServlet extends HttpServlet {
      * @param response
      * @param session
      */
-    protected abstract void initRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session);
+    protected abstract void initRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException;
 
     @Override
     public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
         HttpServletResponse response = (HttpServletResponse) res;
         HttpServletRequest request = (HttpServletRequest) req;
         HttpSession session = request.getSession();
-
         initRequest(request, response, session);
 
         String url = request.getRequestURI();
@@ -52,5 +51,6 @@ public abstract class MapJspServlet extends HttpServlet {
             return;
         }
         request.getRequestDispatcher(url + ".jsp").forward(request, response);
+
     }
 }

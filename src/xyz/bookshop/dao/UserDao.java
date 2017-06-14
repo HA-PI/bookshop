@@ -11,26 +11,22 @@ import java.util.ResourceBundle;
  */
 public class UserDao extends BaseDao {
 
-    public  User checkLogin(String username,String password){ //验证用户名密码
-        try{
-            ResultSet rs = this.select("select * from usrInfo where username=?", username,password);
-            if(rs.next()){
-                return new User(
-                        rs.getString(1),
-                        rs.getString(2),
-                        rs.getDate(3)
-                );
-            }
-            return null;
-        }catch(Exception e){
+    public boolean checkLogin(User user) { //验证用户名密码
+        try {
+            ResultSet rs = this.select("select * from usrInfo where username=? and password=PASSWORD(?)", user.getUsername(), user.getPassword());
+            return rs.next();
+        } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return false;
         }
     }
-    public boolean insertUser(String username,String password) {
-        return this.modify("insert into users values(?,?,current_date())", username, password);
+
+    public boolean insert(User user) {
+        return this.modify("insert into usrInfo values(?,PASSWORD(?),current_date())", user.getUsername(), user.getPassword());
     }
-    public static void main(String[] args){}
+
+    public static void main(String[] args) {
+    }
 
 
 }
