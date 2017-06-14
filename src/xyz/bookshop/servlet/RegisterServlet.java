@@ -12,7 +12,7 @@ import java.io.IOException;
 import xyz.bookshop.dao.*;
 import xyz.bookshop.entity.*;
 /**
- * Created by Yc on 2016/4/8 for students_system.
+ *
  */
 @WebServlet(urlPatterns = {"/register"})
 public class RegisterServlet extends MapJspServlet {
