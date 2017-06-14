@@ -3,6 +3,7 @@ package xyz.bookshop.dao;
 import xyz.bookshop.entity.User;
 
 import java.sql.*;
+
 import java.util.ResourceBundle;
 
 /**
@@ -10,31 +11,26 @@ import java.util.ResourceBundle;
  */
 public class UserDao extends BaseDao {
 
-    public User find(String username) {
-        ResultSet rs = this.select("select * from users where username=?", username);
-        try {
-            if (rs.next()) {
+    public  User checkLogin(String username,String password){ //验证用户名密码
+        try{
+            ResultSet rs = this.select("select * from usrInfo where username=?", username,password);
+            if(rs.next()){
                 return new User(
-                    rs.getString(1),
-                    rs.getString(2),
-                    rs.getDate(3)
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getDate(3)
                 );
             }
-        } catch (SQLException e) {
+            return null;
+        }catch(Exception e){
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
-
-    public boolean add (User user) {
-        return this.modify("insert into users values(?,?,current_date())", user.getUsername(), user.getPassword());
+    public boolean insertUser(String username,String password) {
+        return this.modify("insert into users values(?,?,current_date())", username, password);
     }
+    public static void main(String[] args){}
 
-    public boolean exists (User user) {
-        return this.modify("insert into users values(?,?,current_date())", user.getUsername(), user.getPassword());
-    }
 
-    public static void main(String[] args) throws SQLException {
-
-    }
 }
