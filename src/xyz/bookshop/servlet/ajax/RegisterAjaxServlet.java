@@ -27,8 +27,8 @@ public class RegisterAjaxServlet extends AjaxServlet {
     protected void workspace(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        if ((username.length() < 6 && username.length() > 10) || (password.length() < 6 && password.length() > 10)) {
-            resp.sendError(500, standardize(500, "用户名或者密码长度错误"));
+        if ((username.length() < 6 || username.length() > 10) || (password.length() < 6 || password.length() > 10)) {
+            resp.getWriter().write(standardize(500, "用户名或者密码长度错误"));
         } else {
             if (new UserDao().insert(new User(username, password))) {
                 resp.getWriter().write(standardize(200, "注册成功"));

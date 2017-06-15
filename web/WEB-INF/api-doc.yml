@@ -1,124 +1,117 @@
 swagger: '2.0'
 info:
-  description: This is a simple API
+  description: This is BookShop WebAPI
   version: 1.0.0
-  title: Simple Inventory API
+  title: BookShop WebAPI
   # put the contact info for your development or API team
   contact:
-    email: you@your-company.com
-
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+    email: moyuyc95@gmail.com
 
 # tags are used for organizing operations
 tags:
-- name: admins
-  description: Secured Admin-only calls
+- name: user
+  description: 用户
 - name: developers
   description: Operations available to regular developers
 
 paths:
-  /inventory:
-    get:
-      tags:
-      - developers
-      summary: searches inventory
-      operationId: searchInventory
-      description: |
-        By passing in the appropriate options, you can search for
-        available inventory in the system
-      produces:
-      - application/json
-      parameters:
-      - in: query
-        name: searchString
-        description: pass an optional search string for looking up inventory
-        required: false
-        type: string
-      - in: query
-        name: skip
-        description: number of records to skip for pagination
-        type: integer
-        format: int32
-        minimum: 0
-      - in: query
-        name: limit
-        description: maximum number of records to return
-        type: integer
-        format: int32
-        minimum: 0
-        maximum: 50
-      responses:
-        200:
-          description: search results matching criteria
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/InventoryItem'
-        400:
-          description: bad input parameter
+  /user/register:
     post:
-      tags:
-      - admins
-      summary: adds an inventory item
-      operationId: addInventory
-      description: Adds an item to the system
       consumes:
       - application/json
-      produces:
-      - application/json
+      - application/x-www-form-urlencoded
+      tags:
+      - user
+      summary: 用户注册
+      operationId: register
+      description: |
+        用户注册接口
       parameters:
-      - in: body
-        name: inventoryItem
-        description: Inventory item to add
-        schema:
-          $ref: '#/definitions/InventoryItem'
+      - $ref: '#/parameters/Username'
+      - $ref: '#/parameters/Password'
+
       responses:
-        201:
-          description: item created
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Message'
         400:
-          description: invalid input, object invalid
-        409:
-          description: an existing item already exists
+          description: bad input parameter
+
 definitions:
-  InventoryItem:
-    type: object
+  Message:
+    type: "object"
     required:
-    - id
-    - name
-    - manufacturer
-    - releaseDate
+    - "code"
+    - "data"
     properties:
-      id:
+      code:
+        type: number
+        example: 200
+        description: "状态码"
+      data:
         type: string
-        format: uuid
-        example: d290f1ee-6c54-4b01-90e6-d701748f0851
-      name:
-        type: string
-        example: Widget Adapter
-      releaseDate:
-        type: string
-        format: int32
-        example: 2016-08-29T09:12:33.001Z
-      manufacturer:
-        $ref: '#/definitions/Manufacturer'
-  Manufacturer:
+        example: "成功了"
+        description: "提示信息"
+  User:
+    type: "object"
     required:
-    - name
+    - "username"
+    - "password"
     properties:
-      name:
-        type: string
-        example: ACME Corporation
-      homePage:
-        type: string
-        format: url
-        example:  https://www.acme-corp.com
-      phone:
-        type: string
-        example: 408-867-5309
+      username:
+        $ref: '#/definitions/Username'
+      password:
+        $ref: '#/definitions/Password'
+    xml:
+      name: "User"
+
+  Username:
+    type: string
+    example: "moyuyc"
+    description: "用户名"
+
+  Password:
+    type: "string"
+    example: "moyuyc"
+    description: "密码"
+
+
+parameters:
+  User:
+    name: user
+    in: body
+    schema:
+      $ref: '#/definitions/Username'
+
+  Username:
+    type: string
+    name: username
+    maxLength: 10
+    minLength: 6
+    in: formData
+    description: 用户名
+    required: true
+
+  Password:
+    name: password
+    in: formData
+    maxLength: 10
+    minLength: 6
+    description: 密码
+    type: string
+    required: true
+
 # Added by API Auto Mocking Plugin
-host: virtserver.swaggerhub.com
-basePath: /HA-PI/bookshop/1.0.0
+consumes:
+- application/json
+- application/x-www-form-urlencoded
+produces:
+  - application/json
+  - application/x-www-form-urlencoded
+
+host: moyuyc.xyz:8080
+# localhost:8080 # moyuyc.xyz:8080
+basePath: /api
 schemes:
- - http
+  - http
