@@ -17,7 +17,6 @@ import java.io.IOException;
  */
 @WebServlet(name = "RegisterAjaxServlet", urlPatterns = {"/api/user/register"})
 public class RegisterAjaxServlet extends AjaxServlet {
-
     @Override
     protected int getMethod() {
         return METHOD_POST;
