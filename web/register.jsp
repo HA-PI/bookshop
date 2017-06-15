@@ -20,7 +20,7 @@
     <div class="panel panel-success">
       <div class="panel-body">
 
-        <form id="form" class="" method="post" action="/api/register">
+        <form id="form" class="" method="post" action="/api/user/register">
 
           <div class="form-group">
             <div class="input-group">
