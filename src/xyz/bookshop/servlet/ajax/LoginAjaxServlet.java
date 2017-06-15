@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Created by PC on 2017/6/14.
  */
-@WebServlet(name = "AjaxServlet", urlPatterns = {"/api/login"})
+@WebServlet(name = "LoginAjaxServlet", urlPatterns = {"/api/user/login"})
 public class LoginAjaxServlet extends AjaxServlet {
     @Override
     protected int getMethod() {
@@ -26,9 +26,11 @@ public class LoginAjaxServlet extends AjaxServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         if ((username.length() < 6 && username.length() > 10) || (password.length() < 6 && password.length() > 10)) {
-            resp.sendError(500, standardize(500, "用户名或者密码长度错误"));
+            resp.getWriter().write(standardize(500, "用户名或者密码长度错误"));
         } else {
-            if (new UserDao().checkLogin(new User(username, password))) {
+            User user = null; //(User) session.getAttribute("user");
+            if ((user = new UserDao().find(new User(username, password))) != null) {
+                session.setAttribute("user", user);
                 resp.getWriter().write(standardize(200, "登录成功"));
             } else {
                 resp.getWriter().write(standardize(400, "登录失败"));

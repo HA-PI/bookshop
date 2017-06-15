@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core' %>
+
 <nav class="navbar navbar-default">
   <div class="container">
     <div class="navbar-header">
@@ -14,9 +16,26 @@
         <li><a href="">3</a></li>
       </ul>
 
+
       <ul class="nav navbar-nav navbar-right">
-        <li class="${param['active'] == 'login' ? 'active': ''}"><a href="/login.jsp">登录</a></li>
-        <li class="${param['active'] == 'register' ? 'active': ''}"><a href="/register.jsp">注册</a></li>
+        <c:choose>
+          <c:when test="${sessionScope['user']!=null}">
+            <%--<li></li>--%>
+            <div class="navbar-form">
+              <a class="text-muted" style="margin-right: 10px;" href="/user">
+                <i class="fa fa-user-circle"></i> ${sessionScope['user'].username}
+              </a>
+              <button class="btn btn-sm btn-danger" id="logout-btn" href="javascript:;">
+                登出 <i class="fa fa-sign-out"></i>
+              </button>
+            </div>
+          </c:when>
+          <c:otherwise>
+            <li class="${param['active'] == 'login' ? 'active': ''}"><a href="/login.jsp">登录</a></li>
+            <li class="${param['active'] == 'register' ? 'active': ''}"><a href="/register.jsp">注册</a></li>
+          </c:otherwise>
+        </c:choose>
+
       </ul>
     </div>
   </div>

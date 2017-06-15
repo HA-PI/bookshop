@@ -37,4 +37,11 @@ public class Convert {
         json.putAll(map);
         return json.toString();
     }
+
+    public static String standardize(int code, Object data) {
+        JSONObject json = new JSONObject();
+        json.put("code", code);
+        json.put("data", data);
+        return json.toString();
+    }
 }

@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
  */
 public class UserDao extends BaseDao {
 
-    public boolean checkLogin(User user) { //验证用户名密码
+    public boolean exists(User user) { //验证用户名密码
         try {
             ResultSet rs = this.select("select * from usrInfo where username=? and password=PASSWORD(?)", user.getUsername(), user.getPassword());
             return rs.next();
@@ -19,6 +19,38 @@ public class UserDao extends BaseDao {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public User find(String username) {
+        try {
+            ResultSet rs = this.select("select * from usrInfo where username=?", username);
+            if (rs.next()) {
+                return new User(
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getDate(3)
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public User find(User user) {
+        try {
+            ResultSet rs = this.select("select * from usrInfo where username=? and password=PASSWORD(?)", user.getUsername(), user.getPassword());
+            if (rs.next()) {
+                return new User(
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getDate(3)
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public boolean insert(User user) {

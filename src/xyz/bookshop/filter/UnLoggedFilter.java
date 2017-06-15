@@ -23,7 +23,7 @@ public class UnLoggedFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
-
+        System.out.println("UnLoggedFilter");
         if (session.getAttribute("user") == null) {
             response.sendRedirect("/login");
         } else {

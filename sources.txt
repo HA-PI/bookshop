@@ -1,11 +1,16 @@
 src/xyz/bookshop/dao/BaseDao.java
 src/xyz/bookshop/dao/UserDao.java
 src/xyz/bookshop/entity/User.java
+src/xyz/bookshop/filter/ajax/InitFilter.java
+src/xyz/bookshop/filter/ajax/LoggedFilter.java
+src/xyz/bookshop/filter/ajax/UnLoggedFilter.java
 src/xyz/bookshop/filter/EncodeFilter.java
 src/xyz/bookshop/filter/JspUrlFilter.java
 src/xyz/bookshop/filter/LoggedFilter.java
 src/xyz/bookshop/filter/UnLoggedFilter.java
 src/xyz/bookshop/servlet/ajax/AjaxServlet.java
+src/xyz/bookshop/servlet/ajax/LoginAjaxServlet.java
+src/xyz/bookshop/servlet/ajax/LogoutAjaxServlet.java
 src/xyz/bookshop/servlet/ajax/RegisterAjaxServlet.java
 src/xyz/bookshop/servlet/ApiDocServlet.java
 src/xyz/bookshop/servlet/IndexServlet.java

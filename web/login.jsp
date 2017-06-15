@@ -20,13 +20,13 @@
     <div class="panel panel-success">
       <div class="panel-body">
 
-        <form class="">
+        <form id="form" class="" method="get" action="/api/user/login">
 
           <div class="form-group">
             <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user"></i> <span
                                     class="hidden-xs"> 用户</span></span>
-              <input type="text" class="form-control" placeholder="用户名" id="user"/>
+              <input type="text" name="username" class="form-control" placeholder="用户名" maxlength="10" minlength="6" />
             </div>
           </div>
 
@@ -34,11 +34,11 @@
             <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-lock"></i> <span
                                     class="hidden-xs"> 密码</span></span>
-              <input type="text" class="form-control" placeholder="密码" id="pwd"/>
+              <input type="password" class="form-control" maxlength="10" minlength="6" placeholder="密码" name="password"/>
             </div>
           </div>
 
-          <input type="button" class="btn btn-success pull-right" value="登录">
+          <input type="submit" class="btn btn-success pull-right" value="登录">
 
         </form>
       </div>
@@ -49,5 +49,7 @@
 
 
 <jsp:include page="WEB-INF/template/footer.jsp"/>
+<script src="asset/js/jquery-form.min.js"></script>
+<script src="asset/js/login.min.js"></script>
 </body>
 </html>

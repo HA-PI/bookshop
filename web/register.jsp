@@ -16,7 +16,7 @@
   </jsp:include>
 
 <main class="row">
-  <div class="center-block col-sm-6 no-float ">
+  <div class="center-block col-lg-5 col-md-6 no-float ">
     <div class="panel panel-success">
       <div class="panel-body">
 

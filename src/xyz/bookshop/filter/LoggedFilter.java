@@ -24,7 +24,7 @@ public class LoggedFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
-
+        System.out.println("LoggedFilter");
         if (session.getAttribute("user") != null) {
             response.sendRedirect("/");
         } else {

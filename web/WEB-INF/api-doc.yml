@@ -37,6 +37,28 @@ paths:
             $ref: '#/definitions/Message'
         400:
           description: bad input parameter
+  /user/login:
+      get:
+        consumes:
+        - application/json
+        - application/x-www-form-urlencoded
+        tags:
+        - user
+        summary: 用户登录
+        operationId: register
+        description: |
+          用户登录接口
+        parameters:
+        - $ref: '#/parameters/Username'
+        - $ref: '#/parameters/Password'
+
+        responses:
+          200:
+            description: OK
+            schema:
+              $ref: '#/definitions/Message'
+          400:
+            description: bad input parameter
 
 definitions:
   Message:

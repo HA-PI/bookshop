@@ -1,6 +1,7 @@
 package xyz.bookshop.servlet.ajax;
 
 import net.sf.json.JSONObject;
+import xyz.bookshop.utils.Convert;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,7 +29,8 @@ abstract public class AjaxServlet extends HttpServlet {
                 || getMethod() == METHOD_GET && request.getMethod().equalsIgnoreCase("GET")) {
             commonService(request, response);
         } else {
-            response.sendError(500, standardize(500, "Forbid Method: "+request.getMethod()));
+            response.setStatus(500);
+            response.getWriter().write(standardize(500, "Forbid Method: "+request.getMethod()));
         }
     }
 
@@ -44,7 +46,8 @@ abstract public class AjaxServlet extends HttpServlet {
         HttpSession session = req.getSession();
         String errorMsg = getRequiredFieldsErrMsg(req);
         if (errorMsg != null) {
-            resp.sendError(500, standardize(500, errorMsg));
+            resp.setStatus(400);
+            resp.getWriter().write(standardize(500, errorMsg));
             return;
         }
         workspace(req, resp, session);
@@ -54,17 +57,15 @@ abstract public class AjaxServlet extends HttpServlet {
 
 
     protected String standardize(int code, Object data) {
-        JSONObject json = new JSONObject();
-        json.put("code", code);
-        json.put("data", data);
-        return json.toString();
+        return Convert.standardize(code, data);
     }
 
     private String getRequiredFieldsErrMsg(HttpServletRequest req) {
         String[] fields = getRequiredFields();
         for (String field : fields) {
-            if (null == req.getParameter(field)){
-                return "Error: \"" + field + "\" field is required.";
+            String param = req.getParameter(field);
+            if (null == param || param.isEmpty()){
+                return "Error: '" + field + "' field is required.";
             }
         }
         return null;
