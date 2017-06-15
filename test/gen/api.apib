@@ -1,0 +1,57 @@
+FORMAT: 1A9
+HOST: http://www.moyuyc.xyz:8080/api
+
+# BookShop Web API 1.0.0
+
+BookShop Web API 接口说明，自动生成，来自test2doc.
+
+# User [/user/register]
+
+用户注册接口
+
+## 用户注册 [POST /user/register{?username,password}]
+
+用户注册
+
++ Parameters
+    + username: `moyuyc` - 用户名
+    + password: `moyuyc` - 密码
+
++ Response 200 (application/json)
+
+    + Headers
+
+            server: Apache-Coyote/1.1
+            set-cookie: JSESSIONID=37474DB8B11C480FAFA007CB2D2E11F2; Path=/; HttpOnly
+            content-length: 34
+            date: Thu, 15 Jun 2017 13:47:19 GMT
+            connection: close
+
+    + Attributes
+        + code: 400 (number, required) - 状态
+        + data: 注册失败 (required) - 提示信息
+
+## 用户登录 [GET /user/login{?username,password}]
+
+用户登录
+
++ Parameters
+    + username: `moyuyc` - 用户名
+    + password: `moyuyc` - 密码
+
++ Response 200 (application/json)
+
+    + Attributes
+        + code: 400 (number, required) - 状态
+        + data: 登录失败 (required) - 提示信息
+
+## 用户登出 [GET /user/logout]
+
+用户登出
+
++ Response 200 (application/json)
+
+    + Attributes
+        + code: 400 (number, required) - 状态
+        + data: 请登录后尝试 (required) - 提示信息
+
