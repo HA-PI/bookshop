@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Created by moyu on 2017/6/14.
  */
-@WebServlet(name = "AjaxServlet")
+@WebServlet(name = "AjaxServlet" )
 abstract public class AjaxServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
@@ -50,10 +50,14 @@ abstract public class AjaxServlet extends HttpServlet {
             resp.getWriter().write(standardize(500, errorMsg));
             return;
         }
-        workspace(req, resp, session);
+        try {
+            workspace(req, resp, session);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }
     }
 
-    protected abstract void workspace(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws IOException;
+    protected abstract void workspace(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws IOException, ServletException ;
 
 
     protected String standardize(int code, Object data) {
