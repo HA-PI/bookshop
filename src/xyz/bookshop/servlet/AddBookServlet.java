@@ -15,6 +15,5 @@ import java.io.IOException;
 public class AddBookServlet extends MapJspServlet {
     @Override
     protected void initRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
-
     }
 }

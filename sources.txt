@@ -1,5 +1,7 @@
 src/xyz/bookshop/dao/BaseDao.java
+src/xyz/bookshop/dao/BookDao.java
 src/xyz/bookshop/dao/UserDao.java
+src/xyz/bookshop/entity/Book.java
 src/xyz/bookshop/entity/User.java
 src/xyz/bookshop/filter/ajax/InitFilter.java
 src/xyz/bookshop/filter/ajax/LoggedFilter.java
@@ -8,6 +10,7 @@ src/xyz/bookshop/filter/EncodeFilter.java
 src/xyz/bookshop/filter/JspUrlFilter.java
 src/xyz/bookshop/filter/LoggedFilter.java
 src/xyz/bookshop/filter/UnLoggedFilter.java
+src/xyz/bookshop/servlet/AddBookServlet.java
 src/xyz/bookshop/servlet/ajax/AjaxServlet.java
 src/xyz/bookshop/servlet/ajax/LoginAjaxServlet.java
 src/xyz/bookshop/servlet/ajax/LogoutAjaxServlet.java
@@ -17,5 +20,6 @@ src/xyz/bookshop/servlet/IndexServlet.java
 src/xyz/bookshop/servlet/LoginServlet.java
 src/xyz/bookshop/servlet/MapJspServlet.java
 src/xyz/bookshop/servlet/RegisterServlet.java
+src/xyz/bookshop/servlet/TestServlet.java
 src/xyz/bookshop/utils/Convert.java
 src/xyz/bookshop/utils/Request.java
