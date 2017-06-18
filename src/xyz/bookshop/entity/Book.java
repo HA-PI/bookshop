@@ -1,6 +1,7 @@
 package xyz.bookshop.entity;
 
-import java.sql.*;
+import java.io.InputStream;
+import java.sql.Date;
 
 /**
  * Created by PC on 2017/6/16.
@@ -12,7 +13,30 @@ public class Book {
     private float price;
     private int number;
     private String press;
-    private Blob img;
+    private InputStream img;
+    private String imgtype;
+    private String belong;
+
+    public Date getIntime() {
+        return intime;
+    }
+
+    public void setIntime(Date intime) {
+        this.intime = intime;
+    }
+
+    private Date intime;
+
+
+    public String getBelong() {
+        return belong;
+    }
+
+    public void setBelong(String belong) {
+        this.belong = belong;
+    }
+
+
 
     public int getId() {
         return id;
@@ -62,12 +86,20 @@ public class Book {
         this.press = press;
     }
 
-    public Blob getImg() {
+    public InputStream getImg() {
         return img;
     }
 
-    public void setImg(Blob img) {
+    public void setImg(InputStream img) {
         this.img = img;
+    }
+
+    public String getImgtype() {
+        return imgtype;
+    }
+
+    public void setImgtype(String imgtype) {
+        this.imgtype = imgtype;
     }
 
     @Override
@@ -80,6 +112,9 @@ public class Book {
                 ", number=" + number +
                 ", press='" + press + '\'' +
                 ", img=" + img +
+                ", imgtype='" + imgtype + '\'' +
+                ", belong='" + belong + '\'' +
+                ", intime=" + intime +
                 '}';
     }
 
@@ -98,7 +133,8 @@ public class Book {
         return id;
     }
 
-    public Book(int id, String name, String author, float price, int number, String press, Blob img) {
+    public Book(int id, String name, String author, float price, int number,
+                String press, InputStream img,String imgtype,String belong,Date intime ) {
         this.id = id;
         this.name = name;
         this.author = author;
@@ -106,6 +142,21 @@ public class Book {
         this.number = number;
         this.press = press;
         this.img = img;
+        this.imgtype=imgtype;
+        this.belong=belong;
+        this.intime=intime;
+    }
+    public Book( String name, String author, float price, int number,
+                 String press, InputStream img,String imgtype,String belong) {
+        this.name = name;
+        this.author = author;
+        this.price = price;
+        this.number = number;
+        this.press = press;
+        this.img = img;
+        this.imgtype=imgtype;
+        this.belong=belong;
+
     }
 
 

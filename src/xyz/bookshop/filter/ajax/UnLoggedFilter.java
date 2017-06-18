@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * Created by moyu on 2017/6/11.
  */
-@WebFilter(urlPatterns = {"/api/user/logout"})
+@WebFilter(urlPatterns = {"/api/user/logout", "/api/book/add"})
 public class UnLoggedFilter implements Filter {
 
     @Override
