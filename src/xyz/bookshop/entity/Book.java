@@ -16,6 +16,7 @@ public class Book {
     private InputStream img;
     private String imgtype;
     private String belong;
+    private Date intime;
 
     public Date getIntime() {
         return intime;
@@ -24,9 +25,6 @@ public class Book {
     public void setIntime(Date intime) {
         this.intime = intime;
     }
-
-    private Date intime;
-
 
     public String getBelong() {
         return belong;

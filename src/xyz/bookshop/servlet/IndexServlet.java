@@ -30,12 +30,12 @@ public class IndexServlet extends MapJspServlet {
         BookDao bookDao = new BookDao();
         int page = 0;
         int pageSize = 12;
-
         if (user != null) {
             request.setAttribute("recentBooks", bookDao.list(page, pageSize, user.getUsername()));
         } else {
             request.setAttribute("recentBooks", bookDao.list(page, pageSize));
         }
+
 
     }
 }
