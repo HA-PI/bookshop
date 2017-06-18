@@ -27,23 +27,15 @@ public class IndexServlet extends MapJspServlet {
     @Override
     protected void initRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        UserDao u= new UserDao();
-        BookDao b= new BookDao();
-        Book book new Book();
-        int page=0;
-        int pageSize=4;
-        if(u.exists(user)){
+        BookDao bookDao = new BookDao();
+        int page = 0;
+        int pageSize = 12;
 
-
-
-
-        }else{
-
+        if (user != null) {
+            request.setAttribute("recentBooks", bookDao.list(page, pageSize, user.getUsername()));
+        } else {
+            request.setAttribute("recentBooks", bookDao.list(page, pageSize));
         }
-        request.setAttribute("data", new Object[]{"book", "", ""});
-
-
-
 
     }
 }

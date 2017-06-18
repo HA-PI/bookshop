@@ -28,16 +28,16 @@ public class BookDao extends BaseDao {
             ResultSet rs = this.select("select * from bookInfo where bookid=?", bookid);
             if (rs.next()) {
                 return new Book(
-                    rs.getInt(1),
-                    rs.getString(2),
-                    rs.getString(3),
-                    rs.getFloat(4),
-                    rs.getInt(5),
-                    rs.getString(6),
-                    rs.getBinaryStream(7),
-                    rs.getString(8),
-                    rs.getString(9),
-                    rs.getDate(10)
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getFloat(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getBinaryStream(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getDate(10)
                 );
             }
         } catch (Exception e) {
@@ -45,16 +45,25 @@ public class BookDao extends BaseDao {
         }
         return null;
     }
+
     public boolean insert(Book book) {
         return this.modify("insert into bookInfo values(null,?,?,?,?,?,?,?,?,now())",
                 book.getName(), book.getAuthor(), book.getPrice(),
                 book.getNumber(), book.getPress(), book.getImg(), book.getImgtype(), book.getBelong());
     }
 
-    public List<Book> list(int page,int pageSize) {
+    public List<Book> list(int page, int pageSize, String notBelong) {
+        return list("select * from bookInfo where belong!=? order by intime desc limit ?,? ", notBelong, page*pageSize, pageSize);
+    }
+
+    public List<Book> list(int page, int pageSize) {
+        return list("select * from bookInfo order by intime desc limit ?,? ", page*pageSize, pageSize);
+    }
+
+    private List<Book> list(String sql, Object ...args) {
         try {
-            List<Book> list =new ArrayList<Book>();
-            ResultSet rs = this.select("select * from bookInfo ordered by desc intime limit ?,? ",page,pageSize);
+            List<Book> list = new ArrayList<Book>();
+            ResultSet rs = this.select(sql, args);
             while (rs.next()) {
                 Book book = new Book(
                         rs.getInt(1),
@@ -69,7 +78,6 @@ public class BookDao extends BaseDao {
                         rs.getDate(10)
                 );
                 list.add(book);
-
             }
             return list;
         } catch (Exception e) {
@@ -77,8 +85,6 @@ public class BookDao extends BaseDao {
         }
         return null;
     }
-
-
 
 
 }
