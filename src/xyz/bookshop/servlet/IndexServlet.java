@@ -1,7 +1,10 @@
 package xyz.bookshop.servlet;
 
 
+import xyz.bookshop.dao.BookDao;
 import xyz.bookshop.dao.UserDao;
+import xyz.bookshop.entity.Book;
+import xyz.bookshop.entity.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,9 +26,24 @@ public class IndexServlet extends MapJspServlet {
 
     @Override
     protected void initRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-        Object user = session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         UserDao u= new UserDao();
-        request.setAttribute("data", new Object[]{"ele0", 1888, -2});
-        request.setAttribute("user", user);
+        BookDao b= new BookDao();
+        Book book new Book();
+        int page=0;
+        int pageSize=4;
+        if(u.exists(user)){
+
+
+
+
+        }else{
+
+        }
+        request.setAttribute("data", new Object[]{"book", "", ""});
+
+
+
+
     }
 }

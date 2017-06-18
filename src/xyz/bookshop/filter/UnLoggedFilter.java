@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * Created by moyu on 2017/6/11.
  */
-@WebFilter(urlPatterns = {"/user"})
+@WebFilter(urlPatterns = {"/user","/addbook"})
 public class UnLoggedFilter implements Filter {
 
     @Override
