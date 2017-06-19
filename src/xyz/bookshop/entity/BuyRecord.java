@@ -7,6 +7,7 @@ import java.sql.Date;
  * Created by PC on 2017/6/18.
  */
 public class BuyRecord {
+    private int recordid;
     private String username;
     private int buynumber;
     private Date buytime;
@@ -17,6 +18,14 @@ public class BuyRecord {
     private String press;
     private InputStream img;
     private String imgtype;
+
+    public int getRecordid() {
+        return recordid;
+    }
+
+    public void setRecordid(int recordid) {
+        this.recordid = recordid;
+    }
 
     public String getUsername() {
         return username;
@@ -97,8 +106,10 @@ public class BuyRecord {
     public void setImgtype(String imgtype) {
         this.imgtype = imgtype;
     }
-    public BuyRecord( String username,int buynumber,Date buytime,int bookid,String bookname, String author, float price,
-                 String press, InputStream img,String imgtype) {
+
+    public BuyRecord( int recordid, String username,int buynumber,Date buytime,int bookid,String bookname, String author, float price,
+                           String press, InputStream img,String imgtype) {
+        this.recordid = recordid;
         this.username = username;
         this.buynumber = buynumber;
         this.buytime = buytime;
@@ -111,10 +122,23 @@ public class BuyRecord {
         this.imgtype = imgtype;
     }
 
+    public BuyRecord( String username,int buynumber,int bookid,String bookname, String author, float price,
+                      String press, InputStream img,String imgtype) {
+        this.username = username;
+        this.buynumber = buynumber;
+        this.bookid = bookid;
+        this.bookname = bookname;
+        this.author = author;
+        this.price = price;
+        this.press = press;
+        this.img = img;
+        this.imgtype = imgtype;
+    }
     @Override
     public String toString() {
         return "BuyRecord{" +
-                "username='" + username + '\'' +
+                "recordid=" + recordid +
+                ", username='" + username + '\'' +
                 ", buynumber=" + buynumber +
                 ", buytime=" + buytime +
                 ", bookid=" + bookid +
@@ -126,7 +150,6 @@ public class BuyRecord {
                 ", imgtype='" + imgtype + '\'' +
                 '}';
     }
-
 
     @Override
     public int hashCode() {

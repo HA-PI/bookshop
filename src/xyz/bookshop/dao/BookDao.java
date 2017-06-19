@@ -19,9 +19,8 @@ public class BookDao extends BaseDao {
             e.printStackTrace();
             return false;
         }
-
-
     }
+
     public Book find(String bookid) {
         try {
             ResultSet rs = this.select("select * from bookInfo where bookid=?", bookid);
@@ -120,6 +119,7 @@ public class BookDao extends BaseDao {
         if(page>pageCounts) page=pageCounts;
         return list("select * from bookInfo order by intime desc limit ?,? ", (page-1)*pageSize, pageSize);
     }
+
     public List<Book> mylist(int page, int pageSize,String belong) {
         int pageCounts=count(page,pageSize,belong);
         if(page<1) page=1;
