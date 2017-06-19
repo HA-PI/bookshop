@@ -13,7 +13,7 @@ import java.util.List;
 public class BuyRecordDao extends BaseDao{
     public BuyRecord find(String username) {
         try {
-            ResultSet rs = this.select("select * from buyrecord where username=?",username);
+            ResultSet rs = this.select("select * from buyrecord where username=? ordered by buytime desc",username);
             if (rs.next()) {
                 return new BuyRecord(
                         rs.getString(1),
@@ -33,4 +33,5 @@ public class BuyRecordDao extends BaseDao{
         }
         return null;
     }
+
 }

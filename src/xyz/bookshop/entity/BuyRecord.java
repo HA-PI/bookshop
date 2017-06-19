@@ -111,8 +111,35 @@ public class BuyRecord {
         this.imgtype = imgtype;
     }
 
+    @Override
+    public String toString() {
+        return "BuyRecord{" +
+                "username='" + username + '\'' +
+                ", buynumber=" + buynumber +
+                ", buytime=" + buytime +
+                ", bookid=" + bookid +
+                ", bookname='" + bookname + '\'' +
+                ", author='" + author + '\'' +
+                ", price=" + price +
+                ", press='" + press + '\'' +
+                ", img=" + img +
+                ", imgtype='" + imgtype + '\'' +
+                '}';
+    }
 
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
 
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+    }
 }
