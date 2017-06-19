@@ -22,7 +22,6 @@ public class BookDao extends BaseDao {
 
 
     }
-
     public Book find(String bookid) {
         try {
             ResultSet rs = this.select("select * from bookInfo where bookid=?", bookid);
@@ -51,15 +50,44 @@ public class BookDao extends BaseDao {
                 book.getName(), book.getAuthor(), book.getPrice(),
                 book.getNumber(), book.getPress(), book.getImg(), book.getImgtype(), book.getBelong());
     }
-
+    public int count(int page,int pageSize,String notBelong){
+        int rowCounts;
+        List<Book> list=list(page,pageSize,notBelong);
+        if(list==null)
+        {
+            rowCounts=1;
+        }
+        else
+        {
+            rowCounts=list.size();
+        }
+        int pageCounts=(rowCounts+pageSize-1)/pageSize;
+        return pageCounts;
+    }
+    public int count(int page,int pageSize){
+        int rowCounts;
+        List<Book> list=list(page,pageSize);
+        if(list==null)
+        {
+            rowCounts=1;
+        }
+        else
+        {
+            rowCounts=list.size();
+        }
+        int pageCounts=(rowCounts+pageSize-1)/pageSize;
+        return pageCounts;
+    }
     public List<Book> list(int page, int pageSize, String notBelong) {
-        return list("select * from bookInfo where belong!=? order by intime desc limit ?,? ", notBelong, page*pageSize, pageSize);
+        int pageCounts=count(page,pageSize,notBelong);
+        if(page<1) page=1;
+        if(page>pageCounts) page=pageCounts;
+        return list("select * from bookInfo where belong!=? order by intime desc limit ?,? ", notBelong, (page-1)*pageSize, pageSize);
     }
 
     public List<Book> list(int page, int pageSize) {
-        return list("select * from bookInfo order by intime desc limit ?,? ", page*pageSize, pageSize);
+        return list("select * from bookInfo order by intime desc limit ?,? ", (page-1)*pageSize, pageSize);
     }
-
     private List<Book> list(String sql, Object ...args) {
         try {
             List<Book> list = new ArrayList<Book>();
@@ -85,6 +113,4 @@ public class BookDao extends BaseDao {
         }
         return null;
     }
-
-
 }

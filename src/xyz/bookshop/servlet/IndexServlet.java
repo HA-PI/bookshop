@@ -32,8 +32,10 @@ public class IndexServlet extends MapJspServlet {
         int pageSize = 12;
         if (user != null) {
             request.setAttribute("recentBooks", bookDao.list(page, pageSize, user.getUsername()));
+            request.setAttribute("pageCounts",bookDao.count(page,pageSize,user.getUsername()));
         } else {
             request.setAttribute("recentBooks", bookDao.list(page, pageSize));
+            request.setAttribute("pageCounts",bookDao.count(page,pageSize));
         }
 
 
